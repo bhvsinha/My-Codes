@@ -1,27 +1,64 @@
-#include <stdio.h>
-#include <cs50.h>
-#include <string.h>
+#include<stdio.h>
+#include<cs50.h>
+#include<string.h>
+#include<ctype.h>
 
-
-bool isalphabet(string text){
-  for(int i = 0; i<strlen(text); i++){
-    if(text[i] >= 'a' && text[i] <= 'z'){
-      return false;
-    }
-    if(text[i] >= 'A' && text[i] <= 'Z'){
-      return false;
-    }
-  }
-  return true;
-}
-
+int isalphabet(string s);
+int isrepeat(string s);
+void substitution(string key,string input);
 
 int main(int argc, string argv[]){
+  if(argc == 2 && isalphabet(argv[1]) == 1){
+    if(strlen(argv[1]) != 26){
+      printf("Key must be 26 characters\n");
+    }
+  }
+  if(argc != 2 || isalphabet(argv[1]) == 0){
+    printf("usage ./substitution key\n");
+  }
+  if(argc == 2 && isalphabet(argv[1]) == 1){
+    if(isrepeat(argv[1]) == 0){
+      printf("Do not repeat characters\n");
+    }
+  }
+  if(argc == 2 && isalphabet(argv[1]) == 1 && strlen(argv[1]) == 26 && isrepeat(argv[1]) == 1){
+    string key = argv[1];
+    string inp = get_string("Planetext: ");
 
-if(argc != 2 || isalphabet(argv[1])){
-  printf("usage: ./substitution key\n");
+    substitution(key,inp);
+  }
+
 }
-else if(strlen(argv[1]) != 26 && isalphabet(argv[1])){
-  printf("Key must contain 26 characters\n");
+
+int isalphabet(string s){
+    for (int i=0, n=strlen(s); i<n ; i++){
+      if(!isalpha(s[i])){
+        return 0;
+      }
+    }
+    return 1;
 }
+
+int isrepeat(string s){
+  for(int i=0,n=strlen(s); i<n-1; i++){
+   for(int j=i+1; j<n; j++){
+    if(toupper(s[i]) == toupper(s[j])){
+      return 0;
+    }
+   }
+  }
+  return 1;
+}
+
+void substitution(string key,string input){
+  int n = strlen(input);
+  int m = strlen(key);
+  int index;
+  
+  for(int i=0; i<n; i++){
+    index = toupper(input[i]) - 'A';
+    printf("%c",key[index]);
+  }
+  printf("\n");
+  
 }
