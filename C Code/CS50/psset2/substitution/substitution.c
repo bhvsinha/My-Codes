@@ -52,12 +52,23 @@ int isrepeat(string s){
 
 void substitution(string key,string input){
   int n = strlen(input);
-  int m = strlen(key);
   int index;
   
   for(int i=0; i<n; i++){
-    index = toupper(input[i]) - 'A';
-    printf("%c",key[index]);
+    if(toupper(input[i]) >64 && toupper(input[i])<91){
+      if(input[i] >= 'A' && input[i] <= 'Z'){
+      index = input[i] - 'A';
+      printf("%c",toupper(key[index]));
+      }
+      else if(input[i] >= 'a' && input[i] <= 'z'){
+      index = input[i] - 'a';
+      printf("%c",tolower(key[index]));
+      }
+     
+    }
+    else {
+      printf("%c",input[i]);
+    }
   }
   printf("\n");
   
